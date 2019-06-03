@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <!-- <RuntimeIdentifier>osx-x64</RuntimeIdentifier>
+    <RuntimeIdentifiers>osx-x64;win-x64;linux-x64</RuntimeIdentifiers> -->
+    <RootNamespace>Robot.NET</RootNamespace>
+  </PropertyGroup>
+  <!-- <PropertyGroup>
+    <DefineConstants Condition="'$(RuntimeIdentifier)' == 'win-x64'">$(DefineConstants);_WINDOWS</DefineConstants>
+    <DefineConstants Condition="'$(RuntimeIdentifier)' == 'linux-x64'">$(DefineConstants);_LINUX</DefineConstants>
+    <DefineConstants Condition="'$(RuntimeIdentifier)' == 'osx-x64'">$(DefineConstants);_OSX</DefineConstants>
+  </PropertyGroup> -->
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
+  </ItemGroup>
+</Project>
