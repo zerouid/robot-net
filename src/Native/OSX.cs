@@ -164,6 +164,15 @@ namespace Robot.NET.Native
         [DllImport(OSXDefinitions.CoreGraphicsFrameworkPath)]
         private static extern int CGImageGetHeight(IntPtr image);
 
+        [DllImport(OSXDefinitions.CoreGraphicsFrameworkPath)]
+        private static extern int CGImageGetBytesPerRow(IntPtr image);
+
+        [DllImport(OSXDefinitions.CoreGraphicsFrameworkPath)]
+        private static extern int CGImageGetBitsPerPixel(IntPtr image);
+
+        [DllImport(OSXDefinitions.CoreGraphicsFrameworkPath)]
+        private static extern void CGDataProviderRelease(IntPtr provider);
+
         [DllImport(OSXDefinitions.CoreFoundationFrameworkPath)]
         private extern static void CFRelease(IntPtr ptr);
 
@@ -605,7 +614,8 @@ namespace Robot.NET.Native
                 return null;
             }
 
-            IntPtr imageData = CGDataProviderCopyData(CGImageGetDataProvider(image));
+            IntPtr prov = CGImageGetDataProvider(image);
+            IntPtr imageData = CGDataProviderCopyData(prov);
 
             long bufferSize = (long)CFDataGetLength(imageData);
             byte[] buffer = new byte[bufferSize];
@@ -617,8 +627,13 @@ namespace Robot.NET.Native
                     CFDataGetBytes(imageData, range, (IntPtr)bufptr);
                 }
             }
+            var width = CGImageGetWidth(image);
+            var height = CGImageGetHeight(image);
+            var bpp = CGImageGetBitsPerPixel(image);
+            // var bpr = CGImageGetBytesPerRow(image);
 
-            Bitmap bitmap = new Bitmap(CGImageGetWidth(image), CGImageGetHeight(image));
+            Bitmap bitmap = new Bitmap(width, height);
+
 
             BitmapData bmpdata = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
             ImageLockMode.WriteOnly, PixelFormat.Format32bppRgb);
